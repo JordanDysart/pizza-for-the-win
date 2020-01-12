@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>{% block title %}{% endblock %} - Flaskr</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='afterstyles.css') }}">
+  <meta name="description" content="Jordan's Spare Time">
+  <meta name="author" content="Jordan">
+
+</head>
+
+<body>
+  <header>
+    <h1>the training jodo</h1>
+    <ul class="list-inline">
+      <li>
+        <a href="/blog">
+          <span>read</span>
+          blog
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/JordanDysart">
+          <span>fork</span>
+          github
+        </a>
+      </li>
+      {% if g.user %}
+      <li>
+        <a href="{{ url_for('auth.logout') }}">
+          <span>{{ g.user['username'] }}</span>
+        logout
+        </a>
+      </li>
+      {% else %}
+      <li><a href="{{ url_for('auth.register') }}">Register</a>
+      <li><a href="{{ url_for('auth.login') }}">Log In</a>
+        {% endif %}
+    </ul>
+  </header>
+
+  <section class="content">
+    <header>
+
+      {% block header %}{% endblock %}
+    </header>
+    {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+  </section>
+
+  <body>
+
+</html>
